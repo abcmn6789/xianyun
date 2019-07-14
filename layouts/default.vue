@@ -1,8 +1,25 @@
 <template>
   <div>
+    <!-- 头部 -->
+    <Header/>
+    <!-- 相当于router-view，占位符 -->
     <nuxt />
+    <!-- 页脚组件 -->
+    <Footer/>
   </div>
 </template>
+<script>
+import Header from '@/components/header.vue'
+import Footer from '@/components/footer.vue'
+export default {
+  components:{
+    Header,
+    Footer
+  }
+ 
+}
+</script>
+
 
 <style>
 html {
@@ -16,40 +33,18 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
+*{
+  margin:0;
+  padding: 0;
 }
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
+ol,ul,dl{
+  list-style: none;
+}
+a{
+  color:inherit;
   text-decoration: none;
-  padding: 10px 30px;
 }
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+em,i{
+  font-size: none;
 }
 </style>
