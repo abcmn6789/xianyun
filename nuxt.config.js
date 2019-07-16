@@ -33,7 +33,9 @@ export default {
   */
   plugins: [
     '@/plugins/element-ui',
-    { src: '~/plugins/localStorage.js', ssr: false }
+    { src: '~/plugins/localStorage.js', ssr: false },
+    //引入拦截插件
+    '@/plugins/axios.js'
   ],
   // plugins: [{ src: '~/plugins/localStorage.js', ssr: false }],
   /*

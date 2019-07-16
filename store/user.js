@@ -44,6 +44,23 @@ export const actions={
         // console.log(store)
       });
      
+   },
+   register({commit},from){
+     //处理登录请求
+     this.$axios({
+      url:'/accounts/register',
+      method:'POST',
+      data:from
+  })
+  .then(res=>{
+    //   console.log(res)
+      //把数据保存到vuex;
+     commit('setUserInfo',res.data)
+    
+  })
+
+
    }
+
 }
 
