@@ -34,81 +34,20 @@
       <span>特价机票</span>
     </h2>
     <!-- 特价机票 -->
-    <!-- <el-row class="air-sale" type="flex" justify="space-around">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </el-row>-->
-    <div data-v-30e5dc60 class="air-sale">
-      <div data-v-30e5dc60 class="air-sale-pic el-row is-justify-space-between el-row--flex">
-        <div data-v-30e5dc60 class="el-col el-col-6">
-          <a
-            data-v-30e5dc60
-            href="/air/flights?departCity=%E5%B9%BF%E5%B7%9E&amp;departCode=CAN&amp;destCity=%E4%B8%8A%E6%B5%B7&amp;destCode=SHA&amp;departDate=2019-07-15"
-            class
-          >
-            <img
-              data-v-30e5dc60
-              src="https://imgsrc.baidu.com/baike/pic/item/a71ea8d3fd1f41340d8f3dec281f95cad0c85ee3.jpg"
-            />
-            <div data-v-30e5dc60 class="layer-bar el-row is-justify-space-between el-row--flex">
-              <span data-v-30e5dc60>广州-上海</span>
-              <span data-v-30e5dc60>￥699</span>
-            </div>
-          </a>
-        </div>
-        <div data-v-30e5dc60 class="el-col el-col-6">
-          <a
-            data-v-30e5dc60
-            href="/air/flights?departCity=%E5%B9%BF%E5%B7%9E&amp;departCode=CAN&amp;destCity=%E4%B8%8A%E6%B5%B7&amp;destCode=SHA&amp;departDate=2019-07-15"
-            class
-          >
-            <img
-              data-v-30e5dc60
-              src="https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=d4e2f29522381f309a198aab99004c67/6a63f6246b600c33cd891e65104c510fd8f9a1af.jpg"
-            />
-            <div data-v-30e5dc60 class="layer-bar el-row is-justify-space-between el-row--flex">
-              <span data-v-30e5dc60>广州-上海</span>
-              <span data-v-30e5dc60>￥699</span>
-            </div>
-          </a>
-        </div>
-        <div data-v-30e5dc60 class="el-col el-col-6">
-          <a
-            data-v-30e5dc60
-            href="/air/flights?departCity=%E5%B9%BF%E5%B7%9E&amp;departCode=CAN&amp;destCity=%E4%B8%8A%E6%B5%B7&amp;destCode=SHA&amp;departDate=2019-07-15"
-            class
-          >
-            <img
-              data-v-30e5dc60
-              src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=9154c841bcfd5266a32b3b169b199799/3812b31bb051f8199687c7e0d0b44aed2f73e7fe.jpg"
-            />
-            <div data-v-30e5dc60 class="layer-bar el-row is-justify-space-between el-row--flex">
-              <span data-v-30e5dc60>广州-上海</span>
-              <span data-v-30e5dc60>￥699</span>
-            </div>
-          </a>
-        </div>
-        <div data-v-30e5dc60 class="el-col el-col-6">
-          <a
-            data-v-30e5dc60
-            href="/air/flights?departCity=%E5%B9%BF%E5%B7%9E&amp;departCode=CAN&amp;destCity=%E4%B8%8A%E6%B5%B7&amp;destCode=SHA&amp;departDate=2019-07-15"
-            class
-          >
-            <img
-              data-v-30e5dc60
-              src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=a1b035c61a38534388cf8023a312b01f/9c16fdfaaf51f3de20157fce9eeef01f3b2979f1.jpg"
-            />
-            <div data-v-30e5dc60 class="layer-bar el-row is-justify-space-between el-row--flex">
-              <span data-v-30e5dc60>广州-上海</span>
-              <span data-v-30e5dc60>￥699</span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
     
+    <div class="air-sale">
+        <el-row type="flex" class="air-sale-pic" justify="space-between">
+            <el-col :span="6" v-for="(item, index) in sales" :key="index">
+                <nuxt-link :to="`/air/fligths?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`">
+                    <img :src="item.cover"/>
+                    <el-row class="layer-bar" type="flex" justify="space-between">
+                        <span>{{item.departCity}}-{{item.destCity}}</span>
+                        <span>￥699</span>
+                    </el-row>
+                </nuxt-link>
+            </el-col>
+        </el-row>
+    </div>
   </div>
 </template>
 <script>
@@ -116,22 +55,25 @@ import SearchForm from "@/components/air/searchForm"
 export default {
    components: {
         SearchForm
+    },
+    data(){
+      return{
+        sales:[]
+      }
+    },
+    mounted(){
+      this.$axios({
+        url:'/airs/sale',   
+      })
+      .then(res=>{
+        // console.log(res)
+        this.sales=res.data.data
+      })
     }
 }
 </script>
 <style lang="less" scoped>
-// .air-sale {
-//   border: 1px #ddd solid;
-//   padding: 20px;
-//   margin-bottom: 50px;
-//   margin-top: 20px;
-//   div {
-//     width: 225px;
-//     height: 140px;
-//     overflow: hidden;
-//     border: 1px #ccc solid;
-//   }
-// }
+
 
 
 .air-sale{

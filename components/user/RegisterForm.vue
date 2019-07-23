@@ -81,19 +81,14 @@ export default {
                message:'请输入手机号码'
            })
        }
-       this.$axios({
-           url:'/captchas',
-           method:'POST',
-           data:{tel}
-       })
-       .then((res)=>{
-        //    console.log(res)
-           let {code}=res.data
-           this.$alert(`手机验证码是${code}`, '提示', {
+     //调用store，请求；
+      this.$store.dispatch('user/mycode',tel)
+      .then(code=>{
+          this.$alert(`手机验证码是${code}`, '提示', {
           confirmButtonText: '确定',
           type: 'warning'
         });
-       })
+      })
       },
       //注册
       registerSubmit(){

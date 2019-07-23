@@ -67,6 +67,7 @@ export default {
             background:#fff;
             box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
             overflow:hidden;
+            // border-left: 1px #ddd solid;
             
             .tabs{
                 span{

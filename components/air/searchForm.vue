@@ -88,9 +88,10 @@ export default {
       }
     },
 
-    querySearch(value, callback,a) {
-      if (!value) {
-        return callback([]);
+    querySearch(value) { 
+     return new Promise((resolve,reject)=>{
+        if (!value) {
+        return resolve([]);
       }
       // console.log(value)
       // console.log(callback)
@@ -106,23 +107,31 @@ export default {
           return v;
         });
         //默认选中第一个
-        if (a === 1) {
-          this.form.departCity = newdata[0].value;
-          this.form.departCode = newdata[0].sort;
-        } else if (a === 2) {
-          this.form.destCity = newdata[0].value;
-          this.form.destCode = newdata[0].sort;
-        }
-
-        callback(newdata);
+        resolve(newdata);
       });
+
+     })
+
+     
     },
+
+    //利用sysnc来做
+
     //输入时触发；
     //value:为输入框中输入的值
-    querydepartSearch(value, callback) {
-      var a = 1;
-      this.querySearch(value, callback, a);
+   async querydepartSearch(val, callback) {
+      //promise对象 返回一个成功回调的值；res=newdata
+     const res=await this.querySearch(val)
+     if(res.length>0){
+      //  默认选中第一个
+        this.form.departCity = res[0].value;
+       this.form.departCode = res[0].sort;
+     }
+     callback(res)
     },
+
+
+
     //下拉选中时触发;返回值：选中建议项
     handledepartSelect(item) {
       // console.log(item)
@@ -135,11 +144,21 @@ export default {
       this.form.departDate = moment(time).format("YYYY-MM-DD");
       // console.log(this.form.departDate)
     },
-
+    
+    //利用.then来做
+    
     //输入时触发；
-    querydestSearch(value, callback) {
-      var a=2
-      this.querySearch(value, callback,a);
+    querydestSearch(val, callback) {
+      //得到一个成功回调；
+      this.querySearch(val)
+      .then(res=>{
+        if(res.length>0){
+          // 默认选中第一个
+        this.form.destCity = res[0].value;
+       this.form.destCode = res[0].sort;
+        }
+        callback(res)
+      })
     },
     //选中下拉时触发
     handledestSelect(item) {
@@ -193,8 +212,21 @@ export default {
        
       })
        if(valid){
+         
+
           this.$router.push({path:'/air/fligths',query:this.form})
         }
+        //把当前本地存储的搜索记录拿出；
+         var airs=localStorage.getItem('airs') 
+          var  arr=JSON.parse(airs)|| []
+              arr.unshift(this.form)
+          //让页面保留5张最新的数据；
+          if(arr.length>5){
+                 arr.length=5
+          }
+         
+         //搜索的记录存起来；
+         localStorage.setItem('airs',JSON.stringify(arr))
     }
   }
 };
