@@ -127,7 +127,7 @@ export default {
     //点击跳转；
     handleSubmit(id){
        console.log(id)
-      this.$router.push({path:'/post/postpar',query:{id}})
+      this.$router.push({path:'/post/detail',query:{id}})
     },
     //默认请求全部数据；
     allnumber(){
